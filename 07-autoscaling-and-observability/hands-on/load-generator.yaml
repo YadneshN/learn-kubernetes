@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: loadgen
+spec:
+  template:
+    spec:
+      containers:
+      - name: curl
+        image: byrnedo/alpine-curl
+        command: ["sh","-c","while true; do curl -sS http://cpu-hog.default.svc.cluster.local || true; sleep 1; done"]
+      restartPolicy: Never
+  backoffLimit: 0
